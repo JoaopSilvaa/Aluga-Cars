@@ -17,13 +17,16 @@ public class Aluguel implements CalculateRent {
     public double calculate() {
         if((client.type().equalsIgnoreCase("física") || client.type().equalsIgnoreCase("fisica"))
         && days > 5) {
-            return vehicle.rent() * client.discount() * days;
+            return (vehicle.rent() - (vehicle.rent() * client.discount())) * days;
         } else if ((client.type().equalsIgnoreCase("jurídica") || client.type().equalsIgnoreCase("juridica"))
                 && days > 3) {
-            return vehicle.rent() * client.discount() * days;
+            return (vehicle.rent() - (vehicle.rent() * client.discount())) * days;
+        }
+        else if (client.type().equalsIgnoreCase("física") || client.type().equalsIgnoreCase("fisica") || client.type().equalsIgnoreCase("jurídica") || client.type().equalsIgnoreCase("juridica")){
+            return vehicle.rent() * days;
         }
         else {
-            return vehicle.rent() * days;
+            throw new RuntimeException("Tipo de cliente inválido");
         }
     }
 }
